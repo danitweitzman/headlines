@@ -1,3 +1,24 @@
+/* Base styles */
+body {
+  font-family: "Franklin Gothic Medium", sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px;
+  background-color: #fafafa;
+  color: #222;
+  line-height: 1.5;
+}
+
+h1 {
+  text-align: center;
+  color: #222;
+  margin-bottom: 40px;
+  font-size: 2.8rem;
+  font-weight: 300;
+  letter-spacing: -0.5px;
+}
+
+/* Game state containers */
 #seeScores {
   display: none;
 }
@@ -8,4 +29,147 @@
 
 #game {
   display: none;
+}
+
+/* Start screen */
+#start {
+  text-align: center;
+  padding: 60px 0;
+}
+
+/* Button styling */
+button {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  font-size: 1rem;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin: 8px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+button:hover {
+  background-color: #555;
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+#startGame {
+  font-size: 1.2rem;
+  padding: 16px 48px;
+  background-color: #444;
+  margin-top: 20px;
+}
+
+#startGame:hover {
+  background-color: #666;
+}
+
+#headline {
+  padding: 24px;
+  border-radius: 4px;
+  margin-bottom: 24px;
+  /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  border: 1px solid #eee; */
+  text-align: center;
+}
+
+.word-choice {
+  display: inline-block;
+  margin: 6px;
+  padding: 10px 18px;
+  background-color: #444;
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.word-choice:hover {
+  background-color: #666;
+  transform: translateY(-1px);
+}
+
+/* Leaderboard styling */
+#leaderboard {
+  background-color: white;
+  padding: 24px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  border: 1px solid #eee;
+}
+
+#leaderboard h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 24px;
+  font-weight: 400;
+}
+
+.player-score {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 8px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.player-score:last-child {
+  border-bottom: none;
+}
+
+/* Points display */
+.points {
+  font-weight: 600;
+  color: #444;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  body {
+    padding: 16px;
+  }
+
+  h1 {
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+  }
+
+  button {
+    /* padding: 12px 24px; */
+    max-width: 280px;
+  }
+
+  #next {
+    margin-top: 40px;
+    position: fixed;
+    bottom: 10vh;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #optionsCont {
+    margin-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: space-between;
+    width: 90%;
+  }
+
+  .answer {
+    color: #444;
+    font-weight: 600;
+  }
 }

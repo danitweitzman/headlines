@@ -36,7 +36,9 @@ function setup() {
   }
 
   guests.forEach((guest, index) => {
-    shared.leaderboardHtml += `<div class="guestScore">Guest ${index + 1}: ${guest.points}</div>`;
+    shared.leaderboardHtml += `<div class="guestScore">Guest ${index + 1}: ${
+      guest.points
+    }</div>`;
   });
 }
 
@@ -50,7 +52,12 @@ function draw() {
   }
 
   if (headlineIndex < numArticles) {
-    select("#headline").html(me.headline?.article?.replace("____", chosenWord));
+    select("#headline").html(
+      me.headline?.article?.replace(
+        "____",
+        `<span class="answer">${chosenWord}</span>`
+      )
+    );
   } else {
     select("#headline").html(`Game Over! You scored ${me.points} points!`);
     select("#optionsCont").remove();
