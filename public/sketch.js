@@ -1,7 +1,6 @@
 let shared, me, guests;
 
 let headlineIndex = 0;
-let articles = [];
 let chosenWord = "____";
 const numArticles = 5;
 
@@ -18,17 +17,18 @@ function setup() {
   me.points = 0;
   shared.leaderboardHtml = "";
   shared.state = "start";
+  shared.articles = [];
 
   select("#next").mousePressed(() => {
     if (chosenWord === "____" || headlineIndex >= numArticles) {
       return;
     }
-    if (chosenWord === articles[headlineIndex].word) {
+    if (chosenWord === shared.articles[headlineIndex].word) {
       me.points++;
     }
     chosenWord = "____";
     headlineIndex++;
-    me.headline = articles[headlineIndex];
+    me.headline = shared.articles[headlineIndex];
   });
 
   if (partyIsHost()) {
@@ -36,9 +36,7 @@ function setup() {
   }
 
   guests.forEach((guest, index) => {
-    shared.leaderboardHtml += `<div class="guestScore">Guest ${index + 1}: ${
-      guest.points
-    }</div>`;
+    shared.leaderboardHtml += `<div class="guestScore">Guest ${index + 1}: ${guest.points}</div>`;
   });
 }
 
@@ -53,10 +51,7 @@ function draw() {
 
   if (headlineIndex < numArticles) {
     select("#headline").html(
-      me.headline?.article?.replace(
-        "____",
-        `<span class="answer">${chosenWord}</span>`
-      )
+      me.headline?.article?.replace("____", `<span class="answer">${chosenWord}</span>`)
     );
   } else {
     select("#headline").html(`Game Over! You scored ${me.points} points!`);
@@ -92,8 +87,8 @@ function fetchHeadlines() {
         });
         newButton.parent("#optionsCont");
       });
-      articles = shuffle(responseArr);
-      me.headline = articles[headlineIndex];
+      shared.articles = shuffle(responseArr);
+      me.headline = shared.articles[headlineIndex];
     });
 }
 
