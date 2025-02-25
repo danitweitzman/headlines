@@ -4,8 +4,12 @@ import { createExitSignal, staticServer } from "./shared/server.ts";
 
 import { getEnvVariable } from "./shared/util.ts";
 
+import { promptGPT } from "./shared/openai.ts";
+
 const app = new Application();
 const router = new Router();
+
+const numArticles = 5;
 
 router.get("/api/headline", async (ctx) => {
   console.log("ctx.request.url.pathname:", ctx.request.url.pathname);
@@ -25,9 +29,25 @@ router.get("/api/headline", async (ctx) => {
     `https://api.nytimes.com/svc/topstories/v2/${section}.json?api-key=${nytKey}`
   );
   const articles = await nytResponse.json();
-  const randomArticle = sampleArray(articles.results);
-  console.log(randomArticle);
-  ctx.response.body = { title: randomArticle.title, topic: randomArticle.section };
+
+  const randomArticles = [];
+
+  for (let i = 0; i < numArticles; i++) {
+    const randomArticle = sampleArray(articles.results);
+
+    const word = await promptGPT(
+      `This is a headline from the New York Times: ${randomArticle.title}. Identify one word that you think is the most important in this headline (must be a noun, a proper noun if it's available). Only reply with the word, don't say anything else.`
+    );
+
+    randomArticles.push({
+      og_article: randomArticle.title,
+      section: randomArticle.section,
+      article: randomArticle.title.replace(word, "____"),
+      word: word,
+    });
+  }
+
+  ctx.response.body = randomArticles;
 });
 
 app.use(router.routes());

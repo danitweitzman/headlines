@@ -23,6 +23,7 @@ function fetchHeadline() {
   fetch("/api/headline")
     .then((response) => response.json())
     .then((responseObj) => {
-      shared.headline = responseObj.title;
+      console.log(responseObj);
+      // shared.headline = responseObj.title;
     });
 }
