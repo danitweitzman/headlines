@@ -3,9 +3,12 @@ let shared, me, guests;
 let headlineIndex = 0;
 let chosenWord = "____";
 const numArticles = 5;
+let articles = [];
+let state = "start";
+let headline = {};
 
 function preload() {
-  partyConnect("wss://demoserver.p5party.org", "headlines_game");
+  partyConnect("wss://demoserver.p5party.org", "headlines_game2");
   shared = partyLoadShared("globals");
   me = partyLoadMyShared();
   guests = partyLoadGuestShareds();
@@ -13,27 +16,23 @@ function preload() {
 
 function setup() {
   noCanvas();
-  me.headline = {};
+  headline = {};
   me.points = 0;
   shared.leaderboardHtml = "";
-  shared.state = "start";
-  shared.articles = [];
 
   select("#next").mousePressed(() => {
     if (chosenWord === "____" || headlineIndex >= numArticles) {
       return;
     }
-    if (chosenWord === shared.articles[headlineIndex].word) {
+    if (chosenWord === articles[headlineIndex].word) {
       me.points++;
     }
     chosenWord = "____";
     headlineIndex++;
-    me.headline = shared.articles[headlineIndex];
+    headline = articles[headlineIndex];
   });
 
-  if (partyIsHost()) {
-    select("#startGame").mousePressed(startGame);
-  }
+  select("#startGame").mousePressed(startGame);
 
   guests.forEach((guest, index) => {
     shared.leaderboardHtml += `<div class="guestScore">Guest ${index + 1}: ${guest.points}</div>`;
@@ -41,18 +40,16 @@ function setup() {
 }
 
 function draw() {
-  if (shared.state === "start") {
+  if (state === "start") {
     select("#start").style("display", "block");
     select("#game").style("display", "none");
-  } else if (shared.state === "playing") {
+  } else if (state === "playing") {
     select("#start").style("display", "none");
     select("#game").style("display", "block");
   }
 
   if (headlineIndex < numArticles) {
-    select("#headline").html(
-      me.headline?.article?.replace("____", `<span class="answer">${chosenWord}</span>`)
-    );
+    select("#headline").html(headline?.article?.replace("____", `<span class="answer">${chosenWord}</span>`));
   } else {
     select("#headline").html(`Game Over! You scored ${me.points} points!`);
     select("#optionsCont").remove();
@@ -87,12 +84,12 @@ function fetchHeadlines() {
         });
         newButton.parent("#optionsCont");
       });
-      shared.articles = shuffle(responseArr);
-      me.headline = shared.articles[headlineIndex];
+      articles = shuffle(responseArr);
+      headline = articles[headlineIndex];
     });
 }
 
 function startGame() {
-  shared.state = "playing";
   fetchHeadlines();
+  state = "playing";
 }
