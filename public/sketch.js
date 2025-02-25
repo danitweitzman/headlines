@@ -1,4 +1,4 @@
-let shared, me;
+let shared, me, guests;
 
 let headlineIndex = 0;
 let articles = [];
@@ -9,6 +9,7 @@ function preload() {
   partyConnect("wss://demoserver.p5party.org", "headlines");
   shared = partyLoadShared("globals");
   me = partyLoadMyShared();
+  guests = partyLoadGuestShareds();
 }
 
 function setup() {
@@ -16,9 +17,10 @@ function setup() {
   fetchHeadline();
   me.headline = {};
   me.points = 0;
+  shared.leaderboardHtml = "";
 
   select("#next").mousePressed(() => {
-    if (chosenWord === "____") {
+    if (chosenWord === "____" || headlineIndex >= numArticles) {
       return;
     }
     if (chosenWord === articles[headlineIndex].word) {
@@ -28,16 +30,34 @@ function setup() {
     headlineIndex++;
     me.headline = articles[headlineIndex];
   });
+
+  guests.forEach((guest, index) => {
+    shared.leaderboardHtml += `<div class="guestScore">Guest ${index + 1}: ${guest.points}</div>`;
+  });
 }
 
 function draw() {
-  select("#points").html(me.points);
   if (headlineIndex < numArticles) {
     select("#headline").html(me.headline?.article?.replace("____", chosenWord));
   } else {
     select("#headline").html(`Game Over! You scored ${me.points} points!`);
     select("#optionsCont").remove();
+    select("#next").remove();
+    select("#seeScores")
+      .style("display", "block")
+      .mousePressed(() => {
+        select("#headline").remove();
+        select("#seeScores").remove();
+        select("#leaderboard").style("display", "block");
+      });
   }
+
+  select("#scores").html(shared.leaderboardHtml);
+
+  const guestScores = selectAll(".guestScore");
+  guests.forEach((guest, index) => {
+    guestScores[index].html(`Guest ${index + 1}: ${guest.points}`);
+  });
 }
 
 function fetchHeadline() {
@@ -53,7 +73,7 @@ function fetchHeadline() {
         });
         newButton.parent("#optionsCont");
       });
-      me.headline = responseArr[headlineIndex];
-      articles = responseArr;
+      articles = shuffle(responseArr);
+      me.headline = articles[headlineIndex];
     });
 }
