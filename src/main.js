@@ -9,11 +9,29 @@ import { promptGPT } from "./shared/openai.ts";
 const app = new Application();
 const router = new Router();
 
-const numArticles = 5;
-
 router.get("/api/headline", async (ctx) => {
   console.log("ctx.request.url.pathname:", ctx.request.url.pathname);
   console.log("ctx.request.method:", ctx.request.method);
+
+  const articles = await Deno.readTextFile("articles.json");
+  const parsedArticles = JSON.parse(articles);
+  ctx.response.body = parsedArticles;
+});
+
+app.use(router.routes());
+app.use(router.allowedMethods());
+
+app.use(staticServer);
+
+console.log("\nListening on http://localhost:8000");
+await app.listen({ port: 8000, signal: createExitSignal() });
+
+function sampleArray(array) {
+  return array[Math.floor(Math.random() * array.length)];
+}
+
+async function getArticles() {
+  const numArticles = 5;
 
   const nytKey = getEnvVariable("NYT_KEY");
   console.log("nytKey:", nytKey);
@@ -46,18 +64,7 @@ router.get("/api/headline", async (ctx) => {
       word: word,
     });
   }
+  await Deno.writeTextFile("articles.json", JSON.stringify(randomArticles, null, 2));
 
-  ctx.response.body = randomArticles;
-});
-
-app.use(router.routes());
-app.use(router.allowedMethods());
-
-app.use(staticServer);
-
-console.log("\nListening on http://localhost:8000");
-await app.listen({ port: 8000, signal: createExitSignal() });
-
-function sampleArray(array) {
-  return array[Math.floor(Math.random() * array.length)];
+  return randomArticles;
 }
