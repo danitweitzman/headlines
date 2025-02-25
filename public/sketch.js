@@ -6,7 +6,7 @@ let chosenWord = "____";
 const numArticles = 5;
 
 function preload() {
-  partyConnect("wss://demoserver.p5party.org", "headlines");
+  partyConnect("wss://demoserver.p5party.org", "headlines_game");
   shared = partyLoadShared("globals");
   me = partyLoadMyShared();
   guests = partyLoadGuestShareds();
@@ -14,10 +14,10 @@ function preload() {
 
 function setup() {
   noCanvas();
-  fetchHeadline();
   me.headline = {};
   me.points = 0;
   shared.leaderboardHtml = "";
+  shared.state = "start";
 
   select("#next").mousePressed(() => {
     if (chosenWord === "____" || headlineIndex >= numArticles) {
@@ -31,12 +31,24 @@ function setup() {
     me.headline = articles[headlineIndex];
   });
 
+  if (partyIsHost()) {
+    select("#startGame").mousePressed(startGame);
+  }
+
   guests.forEach((guest, index) => {
     shared.leaderboardHtml += `<div class="guestScore">Guest ${index + 1}: ${guest.points}</div>`;
   });
 }
 
 function draw() {
+  if (shared.state === "start") {
+    select("#start").style("display", "block");
+    select("#game").style("display", "none");
+  } else if (shared.state === "playing") {
+    select("#start").style("display", "none");
+    select("#game").style("display", "block");
+  }
+
   if (headlineIndex < numArticles) {
     select("#headline").html(me.headline?.article?.replace("____", chosenWord));
   } else {
@@ -60,7 +72,7 @@ function draw() {
   });
 }
 
-function fetchHeadline() {
+function fetchHeadlines() {
   fetch("/api/headline")
     .then((response) => response.json())
     .then((responseArr) => {
@@ -76,4 +88,9 @@ function fetchHeadline() {
       articles = shuffle(responseArr);
       me.headline = articles[headlineIndex];
     });
+}
+
+function startGame() {
+  shared.state = "playing";
+  fetchHeadlines();
 }
