@@ -1,3 +1,5 @@
+// deno-lint-ignore-file
+
 let shared, me, guests;
 
 let headlineIndex = 0;
