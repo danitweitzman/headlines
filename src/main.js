@@ -38,7 +38,7 @@ function sampleArray(array) {
 }
 
 async function getArticles() {
-  const numArticles = 5;
+  const numArticles = 10;
 
   const nytKey = getEnvVariable("NYT_KEY");
   console.log("nytKey:", nytKey);
@@ -58,7 +58,11 @@ async function getArticles() {
   const randomArticles = [];
 
   for (let i = 0; i < numArticles; i++) {
-    const randomArticle = sampleArray(articles.results);
+    let randomArticle = sampleArray(articles.results);
+
+    while (randomArticles.some((article) => article.og_article === randomArticle.title)) {
+      randomArticle = sampleArray(articles.results);
+    }
 
     const word = await promptGPT(
       `This is a headline from the New York Times: ${randomArticle.title}. Identify one word that you think is the most important in this headline (must be a noun, a proper noun if it's available). Only reply with the word, don't say anything else.`
