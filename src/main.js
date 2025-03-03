@@ -11,6 +11,11 @@ import { promptGPT } from "./shared/openai.ts";
 const app = new Application();
 const router = new Router();
 
+Deno.cron("Run every day at 1am", "0 1 * * *", () => {
+  console.log("Getting new articles...");
+  getArticles();
+});
+
 router.get("/api/headline", async (ctx) => {
   console.log("ctx.request.url.pathname:", ctx.request.url.pathname);
   console.log("ctx.request.method:", ctx.request.method);
