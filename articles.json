@@ -1,32 +1,62 @@
 [
   {
-    "og_article": "Before Ascending to Top Tier of F.B.I., Bongino Fueled Right-Wing Disbelief",
-    "section": "us",
-    "article": "Before Ascending to Top Tier of F.B.I., ____ Fueled Right-Wing Disbelief",
-    "word": "Bongino"
+    "og_article": "Rising Temperatures Are Scrambling the Base of the Ocean Food Web",
+    "section": "climate",
+    "article": "Rising ____ Are Scrambling the Base of the Ocean Food Web",
+    "word": "Temperatures"
   },
   {
-    "og_article": "Roberta Flack's 11 Essential Songs",
-    "section": "arts",
-    "article": "____'s 11 Essential Songs",
-    "word": "Roberta Flack"
+    "og_article": "Meanwhile … This Is What the Democrats Are Doing?",
+    "section": "opinion",
+    "article": "Meanwhile … This Is What the ____ Are Doing?",
+    "word": "Democrats"
   },
   {
-    "og_article": "Hamas Official Expresses Reservations About Oct. 7 Attack on Israel",
-    "section": "world",
-    "article": "Hamas Official Expresses ____ About Oct. 7 Attack on Israel",
-    "word": "Reservations"
+    "og_article": "Best and Worst Moments From the 2025 Oscars",
+    "section": "movies",
+    "article": "Best and Worst Moments From the 2025 ____",
+    "word": "Oscars"
   },
   {
-    "og_article": "What Germany's Election Result Means for Its Economy",
+    "og_article": "The Fairy Tale Night of Sean Baker, Director of Dreams Gone Awry",
+    "section": "movies",
+    "article": "The Fairy Tale Night of Sean ____, Director of Dreams Gone Awry",
+    "word": "Baker"
+  },
+  {
+    "og_article": "Clock Ticks Down Toward Sweeping Tariffs on Canada, Mexico and China",
     "section": "business",
-    "article": "What ____'s Election Result Means for Its Economy",
-    "word": "Germany"
+    "article": "Clock Ticks Down Toward Sweeping ____ on Canada, Mexico and China",
+    "word": "Tariffs"
   },
   {
-    "og_article": "Clint Hill, Who Sprang to Kennedys' Side as Shots Were Fired, Dies at 93",
+    "og_article": "A Scenic California Rail Line Sits on an Eroding Cliff. Where Should the Tracks Go?",
     "section": "us",
-    "article": "____, Who Sprang to Kennedys' Side as Shots Were Fired, Dies at 93",
-    "word": "Clint Hill"
+    "article": "A Scenic California Rail Line Sits on an Eroding ____. Where Should the Tracks Go?",
+    "word": "Cliff"
+  },
+  {
+    "og_article": "Released From Hamas Captivity, a Hostage Finds His Family Gone",
+    "section": "world",
+    "article": "Released From Hamas Captivity, a ____ Finds His Family Gone",
+    "word": "Hostage"
+  },
+  {
+    "og_article": "A Black Studies Curriculum Is (Defiantly) Rolling Out in New York City",
+    "section": "nyregion",
+    "article": "A Black Studies ____ Is (Defiantly) Rolling Out in New York City",
+    "word": "Curriculum"
+  },
+  {
+    "og_article": "Who Will Join Europe’s ‘Coalition of the Willing’ to Help Ukraine?",
+    "section": "world",
+    "article": "Who Will Join Europe’s ‘____ of the Willing’ to Help Ukraine?",
+    "word": "Coalition"
+  },
+  {
+    "og_article": "Oscars 2025 Winners: Full List",
+    "section": "movies",
+    "article": "Oscars 2025 ____: Full List",
+    "word": "Winners"
   }
 ]
