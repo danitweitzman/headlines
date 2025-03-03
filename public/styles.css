@@ -9,6 +9,10 @@ body {
   line-height: 1.5;
 }
 
+canvas {
+  display: none;
+}
+
 h1 {
   text-align: center;
   color: #222;
@@ -23,7 +27,7 @@ h1 {
   display: none;
 }
 
-#leaderboard {
+#end {
   display: none;
 }
 
